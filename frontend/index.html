@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maji AI - Smart Water Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --hero-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .landing-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 24px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: var(--hero-gradient);
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-primary {
+            padding: 16px 32px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px var(--accent-blue-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px var(--accent-blue-glow);
+        }
+
+        .btn-secondary {
+            padding: 16px 32px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .features-section {
+            padding: 100px 8%;
+            background: #0f172a;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--accent-blue);
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .stats-banner {
+            background: var(--accent-blue);
+            padding: 60px 8%;
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item h4 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+        }
+
+        .stat-item p {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        footer {
+            padding: 60px 8%;
+            background: #020617;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Modal styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 420px;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-blue);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .hero-btns {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="landing-nav">
+        <div class="logo">
+            <i class="fa-solid fa-droplet"></i>
+            <span>Maji<span>AI</span></span>
+        </div>
+        <div class="nav-links">
+            
+            <a href="register.html" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem; margin-left: 12px;">Sign in</a>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>The Future of Water Intelligence</h1>
+            <p>Empowering industries and communities with real-time water quality monitoring, powered by advanced AI safety metrics.</p>
+            <div class="hero-btns">
+                <a href="register.html" class="btn-primary" style="padding: 10px 24px; font-size: 0.9rem; margin-left: 12px;">Get Started</a>
+                <a href="#features" class="btn-secondary">Explore Features</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="glass-panel auth-card" style="margin: 0;">
+                <div class="auth-header">
+                    <div class="logo">
+                        <i class="fa-solid fa-droplet"></i>
+                        <span>Maji<span>AI</span></span>
+                    </div>
+                    <h2>Welcome Back</h2>
+                    <p>Enter your credentials to access Maji AI</p>
+                </div>
+
+                <div id="login-error" class="error-message"></div>
+
+                <form class="auth-form" id="login-form">
+                    <div class="input-group">
+                        <label for="login-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="login-email" placeholder="admin@majiai.io" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Sign In</button>
+                </form>
+
+                <div class="auth-footer">
+                    Don't have an account? <a href="register.html">Register here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="features" class="features-section">
+        <div class="section-header">
+            <h2>Intelligent Monitoring for a Pure World</h2>
+            <p style="color: var(--text-muted);">Maji AI combines cutting-edge IoT sensors with machine learning to ensure water safety.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="glass-panel feature-card">
+                <i class="fa-solid fa-chart-line"></i>
+                <h3>Real-Time Telemetry</h3>
+                <p>Live tracking of pH, Turbidity, and Conductivity with sub-second latency.</p>
+            </div>
+            <div class="glass-panel feature-card">
+                <i class="fa-solid fa-shield-virus"></i>
+                <h3>AI Safety Index</h3>
+                <p>Advanced risk assessment models identify contamination before it becomes a crisis.</p>
+            </div>
+            <div class="glass-panel feature-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Purification Insights</h3>
+                <p>Smart automation optimizes purification cycles for maximum efficiency and safety.</p>
+            </div>
+            <div class="glass-panel feature-card">
+                <i class="fa-solid fa-comment-sms"></i>
+                <h3>Instant Alerts</h3>
+                <p>Get notified via SMS and Dashboard alerts the moment anomalies are detected.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-banner">
+        <div class="stat-item">
+            <h4>99.9%</h4>
+            <p>Accuracy Rate</p>
+        </div>
+        <div class="stat-item">
+            <h4>2.5M+</h4>
+            <p>Readings Analyzed</p>
+        </div>
+        <div class="stat-item">
+            <h4>150+</h4>
+            <p>Nodes Monitored</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Maji AI Systems. All rights reserved. <br> Protecting the world's most vital resource.</p>
+    </footer>
+
+    <script src="auth.js"></script>
+    <script>
+        // Smooth scroll for anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

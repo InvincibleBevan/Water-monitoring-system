@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maji AI - Smart Water Quality Monitoring</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <script src="auth.js"></script>
+    <div class="app-container">
+        
+        <aside class="sidebar">
+                <a href="index.html" style="text-decoration: none;">
+                    <div class="logo">
+                        <i class="fa-solid fa-droplet"></i>
+                        <span>Maji<span>AI</span></span>
+                    </div>
+                </a>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" id="nav-dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-map">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Map View</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-reports">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-alerts">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Alerts</span>
+                    <span class="badge" id="alert-badge">0</span>
+                </a>
+                <a href="#" class="nav-item" id="nav-settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" id="btn-logout" style="margin-top: auto; color: var(--accent-red);">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Log Out</span>
+                </a>
+            </nav>
+
+            <div class="system-status">
+                <div class="status-indicator safe" id="system-status-indicator"></div>
+                <span>System Online</span>
+            </div>
+        </aside>
+
+        
+        <main class="main-content">
+        
+            <div id="view-dashboard" class="view-section active">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>Source Monitor: Station Alpha</h1>
+                        <p class="subtitle">Real-time SDG 6 Water Safety Telemetry</p>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <div class="ai-status" id="ai-status-panel">
+                            <i class="fa-solid fa-shield-halved"></i> AI Safety Index: <span id="safety-score">98%</span> <span id="safety-text" style="margin-left: 6px; padding-left: 6px; border-left: 1px solid currentColor;">(Safe)</span>
+                        </div>
+                        
+                        <button class="btn btn-warning" id="btn-simulate-issue">
+                            <i class="fa-solid fa-flask-vial"></i> Simulate Contamination
+                        </button>
+                        <button class="btn btn-success" id="btn-resolve-issue" style="display: none;">
+                            <i class="fa-solid fa-check-double"></i> Resolve Issue
+                        </button>
+                    </div>
+                </header>
+
+                
+                <section class="kpi-grid">
+                    
+                    <div class="kpi-card" id="card-ph">
+                    <div class="card-header">
+                        <div class="icon-box blue">
+                            <i class="fa-solid fa-vial"></i>
+                        </div>
+                        <h3>pH Level</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="value"><span id="val-ph">7.2</span></div>
+                        <div class="trend" id="trend-ph">Optimal</div>
+                    </div>
+                    <div class="progress-bar"><div class="progress blue" id="prog-ph" style="width: 50%;"></div></div>
+                </div>
+
+            
+                <div class="kpi-card" id="card-tur">
+                    <div class="card-header">
+                        <div class="icon-box orange">
+                            <i class="fa-solid fa-water"></i>
+                        </div>
+                        <h3>Turbidity (NTU)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="value"><span id="val-tur">1.5</span></div>
+                        <div class="trend" id="trend-tur">Clear</div>
+                    </div>
+                    <div class="progress-bar"><div class="progress orange" id="prog-tur" style="width: 15%;"></div></div>
+                </div>
+
+                <div class="kpi-card" id="card-temp">
+                    <div class="card-header">
+                        <div class="icon-box red">
+                            <i class="fa-solid fa-temperature-half"></i>
+                        </div>
+                        <h3>Temperature (°C)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="value"><span id="val-temp">18.4</span></div>
+                        <div class="trend" id="trend-temp">Normal</div>
+                    </div>
+                    <div class="progress-bar"><div class="progress red" id="prog-temp" style="width: 45%;"></div></div>
+                </div>
+
+                
+                <div class="kpi-card" id="card-cond">
+                    <div class="card-header">
+                        <div class="icon-box purple">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3>Conductivity (µS/cm)</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="value"><span id="val-cond">350</span></div>
+                        <div class="trend" id="trend-cond">Normal</div>
+                    </div>
+                    <div class="progress-bar"><div class="progress purple" id="prog-cond" style="width: 35%;"></div></div>
+                </div>
+
+                <div class="kpi-card" id="card-risk">
+                    <div class="card-header">
+                        <div class="icon-box green">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3>Risk Confidence</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="value"><span id="val-risk">98%</span></div>
+                        <div class="trend" id="trend-risk">High</div>
+                    </div>
+                    <div class="progress-bar"><div class="progress green" id="prog-risk" style="width: 98%;"></div></div>
+                </div>
+
+                <div class="kpi-card" id="card-puri">
+                    <div class="card-header">
+                        <div class="icon-box cyan">
+                            <i class="fa-solid fa-filter"></i>
+                        </div>
+                        <h3>Purification</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="value"><span id="val-puri">Active</span></div>
+                        <div class="trend" id="trend-puri">Optimal</div>
+                    </div>
+                    <div class="progress-bar"><div class="progress cyan" id="prog-puri" style="width: 100%;"></div></div>
+                </div>
+            </section>
+
+            
+            <section class="dashboard-body">
+                <div class="chart-container glass-panel" style="display: flex; flex-direction: column;">
+                    <div class="panel-header">
+                        <h2>Live Telemetry</h2>
+                        <div class="legend">
+                            <span class="legend-item"><span class="dot blue"></span> pH</span>
+                            <span class="legend-item"><span class="dot orange"></span> Turbidity</span>
+                        </div>
+                    </div>
+                    <div class="canvas-wrapper" style="flex: 1;">
+                        <canvas id="mainChart"></canvas>
+                    </div>
+                    <div style="padding: 16px 24px; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.1); border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;">
+                        <span style="font-weight: 500; font-size: 0.95rem; color: var(--text-muted);">Reference :</span>
+                        <div style="display: flex; gap: 16px; font-size: 0.9rem;">
+                            <span><strong style="color: var(--accent-blue);">pH:</strong> <span id="footer-val-ph">7.2</span></span>
+                            <span><strong style="color: var(--accent-purple);">Conductivity:</strong> <span id="footer-val-cond">400</span></span>
+                            <span><strong style="color: var(--accent-orange);">Turbidity:</strong> <span id="footer-val-tur">2.5</span></span>
+                            <span><strong style="color: var(--text-main);">Solid:</strong> <span id="footer-val-solid">300</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-container glass-panel">
+                    <div class="panel-header">
+                        <h2>AI Insights</h2>
+                    </div>
+                    <div class="insights-list" id="insights-log">
+                        <div class="insight-item safe">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <div class="insight-text">
+                                <h4>Water Quality Optimal</h4>
+                                <p>All parameters are within safe WHO guidelines.</p>
+                            </div>
+                            <span class="time" id="time-init">Just now</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        
+            <div id="view-map" class="view-section hidden">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>Regional Map View</h1>
+                        <p class="subtitle">Geospatial Distribution of Monitoring Stations</p>
+                    </div>
+                </header>
+                <div class="glass-panel" style="flex: 1; display: flex; align-items: center; justify-content: center; min-height: 400px; flex-direction: column; gap: 16px;">
+                    <i class="fa-solid fa-map-location-dot" style="font-size: 4rem; color: var(--accent-blue);"></i>
+                    <h2>Interactive Map Integration</h2>
+                    <p style="color: var(--text-muted); max-width: 500px; text-align: center;">This section is ready for a map provider integration (e.g., Leaflet or Google Maps) to display the geographic location of Station Alpha and other active nodes.</p>
+                </div>
+            </div>
+
+            
+            <div id="view-reports" class="view-section hidden">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>Compliance Reports</h1>
+                        <p class="subtitle">Historical Data & SDG 6 Reporting</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-warning"><i class="fa-solid fa-download"></i> Export PDF</button>
+                    </div>
+                </header>
+                <div class="glass-panel" style="padding: 24px;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border-color);">
+                                <th style="padding: 12px;">Date</th>
+                                <th style="padding: 12px;">Average pH</th>
+                                <th style="padding: 12px;">Max Turbidity</th>
+                                <th style="padding: 12px;">AI Status</th>
+                                <th style="padding: 12px;">Compliance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px; color: var(--text-muted);">Today</td>
+                                <td style="padding: 12px;">7.2 - Normal</td>
+                                <td style="padding: 12px;">1.5 NTU</td>
+                                <td style="padding: 12px; color: var(--status-safe);">Nominal</td>
+                                <td style="padding: 12px;"><span class="trend">Pass</span></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border-color);">
+                                <td style="padding: 12px; color: var(--text-muted);">Yesterday</td>
+                                <td style="padding: 12px;">7.1 - Normal</td>
+                                <td style="padding: 12px;">2.1 NTU</td>
+                                <td style="padding: 12px; color: var(--status-safe);">Nominal</td>
+                                <td style="padding: 12px;"><span class="trend">Pass</span></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; color: var(--text-muted);">Mar 11</td>
+                                <td style="padding: 12px;">6.4 - Warning</td>
+                                <td style="padding: 12px;">5.2 NTU</td>
+                                <td style="padding: 12px; color: var(--accent-orange);">Elevated Risk</td>
+                                <td style="padding: 12px;"><span class="trend warning">Review</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            
+            <div id="view-alerts" class="view-section hidden">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>System Alerts</h1>
+                        <p class="subtitle">Prioritized Event Logs</p>
+                    </div>
+                </header>
+                <div class="glass-panel" style="padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+                    <div class="insight-item danger">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <div class="insight-text">
+                            <h4>Critical: Contamination Protocol Triggered</h4>
+                            <p>Test simulation event for Station Alpha initiated by user.</p>
+                        </div>
+                        <span class="time">Simulation Event</span>
+                    </div>
+                     <div class="insight-item warning">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <div class="insight-text">
+                            <h4>Warning: Sensor Calibration Due</h4>
+                            <p>Turbidity sensor requires scheduled maintenance within 72 hours.</p>
+                        </div>
+                        <span class="time">System Generated</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div id="view-settings" class="view-section hidden">
+                <header class="top-header">
+                    <div class="header-titles">
+                        <h1>Configuration</h1>
+                        <p class="subtitle">System Preferences & AI Thresholds</p>
+                    </div>
+                </header>
+                <div class="glass-panel" style="padding: 24px; max-width: 600px;">
+                    <div style="margin-bottom: 24px;">
+                        <h3 style="margin-bottom: 12px; font-weight: 500;">Alert Thresholds</h3>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center;">
+                            <span style="color: var(--text-muted);">Critical pH Level</span>
+                            <input type="text" value="< 6.5 or > 8.5" disabled style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: white; padding: 8px; border-radius: 4px; width: 150px; text-align: center;">
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 12px; align-items: center;">
+                            <span style="color: var(--text-muted);">Critical Turbidity Level</span>
+                            <input type="text" value="> 5.0 NTU" disabled style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: white; padding: 8px; border-radius: 4px; width: 150px; text-align: center;">
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 12px; font-weight: 500;">Notifications</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--text-muted);">SMS Alert System</span>
+                            <div id="btn-toggle-sms" style="background: var(--status-safe); padding: 4px 12px; border-radius: 999px; font-size: 0.8rem; font-weight: bold; cursor: pointer; user-select: none; transition: background 0.3s;">ENABLED</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    
+    <div class="modal-overlay" id="sms-modal">
+        <div class="phone-mockup">
+            <div class="notch"></div>
+            <div class="phone-screen">
+                <div class="sms-header">
+                    <i class="fa-solid fa-comment-sms"></i> Messages
+                </div>
+                <div class="msg-bubble system">
+                    <strong>CRITICAL ALERT: WATER QUALITY HAZARD</strong><br>
+                    Location: River Delta Station Alpha.<br>
+                    High contamination detected (Turbidity Spike & pH Drop). Do not consume water.<br>
+                    <em>- AquaGuard AI System</em>
+                </div>
+                <button class="btn-dismiss" id="btn-close-sms">Dismiss</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="main.js"></script>
+</body>
+</html>
+

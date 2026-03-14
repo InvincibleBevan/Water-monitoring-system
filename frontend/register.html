@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maji AI - Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="features-showcase">
+            <div class="features-header">
+                <h2>Join the Future of Water</h2>
+                <p>Register to manage your telemetry grid and AI safety protocols.</p>
+            </div>
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <div>
+                        <h3>Universal Monitoring</h3>
+                        <p>Track every station in your network from a single secure interface.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-shield-virus"></i>
+                    <div>
+                        <h3>Enterprise AI Safety</h3>
+                        <p>Deploy advanced machine learning models to protect public health.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-file-contract"></i>
+                    <div>
+                        <h3>Compliance Ready</h3>
+                        <p>Generate SDG 6 reports and regional compliance documents automatically.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <i class="fa-solid fa-headset"></i>
+                    <div>
+                        <h3>24/7 Support</h3>
+                        <p>Access our expert team for system optimization and hardware support.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-panel auth-card">
+            <div class="auth-header">
+                <a href="index.html" style="text-decoration: none;">
+                    <div class="logo">
+                        <i class="fa-solid fa-droplet"></i>
+                        <span>Maji<span>AI</span></span>
+                    </div>
+                </a>
+                <h2>Create Account</h2>
+                <p>Register as a new system operator</p>
+            </div>
+
+            <div id="register-error" class="error-message"></div>
+            <div id="register-success" class="success-message">
+                Registration successful! Redirecting to dashboard...
+            </div>
+
+            <form class="auth-form" id="register-form">
+                <div class="input-group">
+                    <label for="reg-name">Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="reg-name" placeholder="John Doe" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-envelope"></i>
+                        <input type="email" id="reg-email" placeholder="operator@majiai.io" required>
+                    </div>
+                </div>               
+             <div class="input-group">
+             <label for="reg-phone">Phone Number</label>
+             <div class="input-wrapper">
+          <i class="fa-solid fa-phone"></i>
+         <input type="tel" id="reg-phone" placeholder="+254712345678" required>
+         </div>
+         </div>
+
+                <div class="input-group">
+                    <label for="reg-password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="reg-password" placeholder="••••••••" required minlength="6">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="reg-confirm">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="reg-confirm" placeholder="••••••••" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Register</button>
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="auth.js"></script>
+</body>
+</html>
